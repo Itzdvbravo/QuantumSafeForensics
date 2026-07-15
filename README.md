@@ -30,7 +30,7 @@ python -m venv .venv
 # Install required dependencies
 pip install flask flask_cors dilithium-py
 
-# (Optional) Set the Groq API key for AI-assisted risk enrichment
+# Set the Groq API key for AI-assisted risk enrichment
 # On Windows: set GROQ_API_KEY="gsk_..."
 # On Mac/Linux: export GROQ_API_KEY="gsk_..."
 
@@ -74,7 +74,7 @@ The project uses synthetic data to simulate user activity and malicious events. 
    # You might need dilithium-py installed here as well
    python BehaviourGenerator.py
    ```
-   This will output a new `synthetic_banking_logs.json` file.
+   This will output a new `synthetic_banking_logs.json` and `logger_public_key.hex` file.
 
 4. **Analyze the New Data:**
-   Copy the updated `synthetic_banking_logs.json` file into the `Backend` directory (if it's not already linked) and restart the `server.py` backend. The new anomalies and behaviours will now be flagged and reported by the forensic engine.
+   Copy the updated `synthetic_banking_logs.json` file into the `Backend` directory (if it's not already linked) and restart the `server.py` backend. The new anomalies and behaviours will now be flagged and reported by the forensic engine. Ensure to keep `base_behavior.json` in backend and data generator the same.

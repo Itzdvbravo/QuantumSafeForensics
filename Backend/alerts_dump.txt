@@ -1,0 +1,21 @@
+
+========================================
+Alert ID: LOG-1288 | User: User_Charlie | Score: 120
+Triggering Event: EXPORTED_FILE on Customer_CRM
+Risk Reasons for last event:
+['RARE_ACTION(EXPORTED_FILE)']
+Total Bytes: 235347
+
+========================================
+Alert ID: LOG-1967 | User: HR_Steve | Score: 140
+Triggering Event: EXPORTED_FILE on Finance_DB
+Risk Reasons for last event:
+['HIGH_VOLUME(55000000B vs 750000B limit)', 'UNAUTH_ASSET(Finance_DB)']
+Total Bytes: 55000000
+
+========================================
+Alert ID: LOG-1894 | User: User_Kattie | Score: 120
+Triggering Event: EXPORTED_FILE on HR_Portal
+Risk Reasons for last event:
+['RARE_ACTION(EXPORTED_FILE)']
+Total Bytes: 302294

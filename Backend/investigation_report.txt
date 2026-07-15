@@ -1,0 +1,717 @@
+
+======================================================================
+        QUANTUM-SAFE FORENSICS — INSIDER THREAT INVESTIGATION
+======================================================================
+  Run at  : 2026-07-15T12:26:04Z UTC
+  Logs    : F:\Python\Quantum Safe Forensics (Finspark)\synthetic_banking_logs.json
+  Profiles: F:\Python\Quantum Safe Forensics (Finspark)\base_behaviour.json
+  Window  : 12h  |  Threshold: 100 pts
+
+  [*] Loaded 1644 log entries covering 2026-06-01T07:07:00Z -> 2026-08-28T16:38:00Z
+      Graph : 14 nodes, 1644 edges
+      Users : User_Charlie, Admin_Alice, HR_Steve, Contractor_Bob, Finance_John, User_Kattie
+      Assets: System_Core, Finance_DB, Employee_DB, HR_Portal, Jump_Server_01, Jira, Customer_CRM, Admin_Gateway
+
+======================================================================
+                            ALERTED USERS
+======================================================================
+
+======================================================================
+  ALERT 1 of 4
+----------------------------------------------------------------------
+  User         : Admin_Alice
+  Trigger Log  : LOG-2631
+  Asset        : Finance_DB
+  Timestamp    : 2026-06-25T10:00:00Z
+  Window Total : 150 pts  (threshold: 100 pts)
+
+  CONTRIBUTING EVENTS IN 12-HOUR WINDOW:
+  --------------------------------------------------------------------
+    [2026-06-25 08:55Z]  LOG-1471    + 25pts  action=GRANTED_PRIVILEGE  asset=Jump_Server_01
+      reasons  : RARE_ACTION(GRANTED_PRIVILEGE)
+      metadata : granted_to=Finance_John  |  approval_id=LOG-1470
+    [2026-06-25 10:00Z]  LOG-2631    +125pts  action=GRANTED_PRIVILEGE  asset=Finance_DB
+      reasons  : RARE_ACTION(GRANTED_PRIVILEGE), UNAPPROVED_GRANT
+      metadata : granted_to=Contractor_Bob
+
+  LOOKBACK — 30-DAY ACCESS CHAIN ON ALERTED ASSET:
+  --------------------------------------------------------------------
+  
+  ------------------------------------------------------------------
+    [GRAPH] BACKWARD CHAIN — Asset: Finance_DB
+    Lookback: 30 days before 2026-06-25T10:00:00+00:00
+  ------------------------------------------------------------------
+    [2026-06-01T09:08:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1001  (0B)
+    [2026-06-01T10:40:00Z]  Finance_John          AUTHENTICATED_TO           LOG-1021  (0B)
+    [2026-06-01T13:11:00Z]  Finance_John          LOGGED_OUT                 LOG-1018  (0B)
+    [2026-06-02T13:34:00Z]  Finance_John          QUERIED                    LOG-1049  (76239B)
+    [2026-06-02T14:41:00Z]  Finance_John          QUERIED                    LOG-1048  (81110B)
+    [2026-06-02T15:42:00Z]  Finance_John          QUERIED                    LOG-1047  (114387B)
+    [2026-06-03T11:39:00Z]  Admin_Alice           QUERIED                    LOG-1057  (3597B)
+    [2026-06-03T12:01:00Z]  Finance_John          QUERIED                    LOG-1070  (38749B)
+    [2026-06-03T14:48:00Z]  Finance_John          AUTHENTICATED_TO           LOG-1069  (0B)
+    [2026-06-03T14:50:00Z]  Finance_John          QUERIED                    LOG-1072  (211640B)
+    [2026-06-03T16:54:00Z]  Finance_John          AUTHENTICATED_TO           LOG-1071  (0B)
+    [2026-06-04T15:53:00Z]  Admin_Alice           REVOKED_PRIVILEGE          LOG-1077  (0B)
+    [2026-06-09T09:08:00Z]  Admin_Alice           QUERIED                    LOG-1147  (1550B)
+    [2026-06-10T09:38:00Z]  Admin_Alice           LOGGED_OUT                 LOG-1175  (0B)
+    [2026-06-12T10:21:00Z]  User_Charlie          EXPORTED_FILE              LOG-1232  (85035B)
+    [2026-06-12T12:04:00Z]  Admin_Alice           APPROVED_TICKET            LOG-1223  (0B)
+    [2026-06-12T12:19:00Z]  Admin_Alice           GRANTED_PRIVILEGE          LOG-1224  (0B)
+    [2026-06-12T17:27:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1222  (0B)
+    [2026-06-15T11:00:00Z]  User_Charlie          EXPORTED_FILE              LOG-1256  (22273B)
+    [2026-06-15T13:19:00Z]  Admin_Alice           EXPORTED_FILE              LOG-1246  (4053B)
+    [2026-06-15T13:31:00Z]  User_Charlie          AUTHENTICATED_TO           LOG-1255  (0B)
+    [2026-06-16T07:22:00Z]  User_Charlie          QUERIED                    LOG-1287  (65295B)
+    [2026-06-16T11:20:00Z]  User_Charlie          EXPORTED_FILE              LOG-1285  (95998B)
+    [2026-06-16T15:04:00Z]  User_Charlie          QUERIED                    LOG-1281  (34452B)
+    [2026-06-17T15:41:00Z]  User_Charlie          LOGGED_OUT                 LOG-1313  (0B)
+    [2026-06-18T17:05:00Z]  Admin_Alice           REVOKED_PRIVILEGE          LOG-1331  (0B)
+    [2026-06-22T18:11:00Z]  Admin_Alice           EXPORTED_FILE              LOG-1387  (4946B)
+    [2026-06-24T16:52:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1444  (0B)
+    [2026-06-25T10:00:00Z]  Admin_Alice           GRANTED_PRIVILEGE          LOG-2631  (0B)
+  ------------------------------------------------------------------
+
+  FORWARD REACHABILITY — 2-HOP BLAST RADIUS:
+  --------------------------------------------------------------------
+  
+  ------------------------------------------------------------------
+    [GRAPH] FORWARD REACHABILITY — Origin: Admin_Alice
+    Hops: 2  |  Alert time: 2026-06-25T10:00:00+00:00
+  ------------------------------------------------------------------
+    [HOP 1]  User_Charlie          was also on  System_Core           via QUERIED  (2026-06-01T07:07:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via LOGGED_OUT  (2026-06-01T08:04:00Z)
+    [HOP 1]  HR_Steve              was also on  Employee_DB           via LOGGED_OUT  (2026-06-01T09:28:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via QUERIED  (2026-06-01T09:42:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via LOGGED_OUT  (2026-06-01T10:03:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via EXPORTED_FILE  (2026-06-01T10:16:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via AUTHENTICATED_TO  (2026-06-01T10:32:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-01T10:40:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via QUERIED  (2026-06-01T10:42:00Z)
+    [HOP 1]  HR_Steve              was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-01T11:18:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via QUERIED  (2026-06-01T11:23:00Z)
+    [HOP 1]  Finance_John          was also on  Jira                  via LOGGED_OUT  (2026-06-01T12:23:00Z)
+    [HOP 1]  User_Kattie           was also on  Customer_CRM          via EXPORTED_FILE  (2026-06-01T12:40:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-01T12:58:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via LOGGED_OUT  (2026-06-01T13:11:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via EXPORTED_FILE  (2026-06-01T13:55:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-06-01T16:50:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via AUTHENTICATED_TO  (2026-06-01T16:56:00Z)
+    [HOP 1]  Finance_John          was also on  Jira                  via QUERIED  (2026-06-01T17:39:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via LOGGED_OUT  (2026-06-01T17:43:00Z)
+    [HOP 1]  User_Charlie          was also on  Customer_CRM          via LOGGED_OUT  (2026-06-02T08:53:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via LOGGED_OUT  (2026-06-02T09:05:00Z)
+    [HOP 1]  HR_Steve              was also on  Employee_DB           via QUERIED  (2026-06-02T09:31:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-02T11:54:00Z)
+    [HOP 1]  User_Charlie          was also on  Customer_CRM          via EXPORTED_FILE  (2026-06-02T12:33:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via QUERIED  (2026-06-02T13:34:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via QUERIED  (2026-06-02T13:38:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via EXPORTED_FILE  (2026-06-02T14:58:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via LOGGED_OUT  (2026-06-02T15:03:00Z)
+    [HOP 1]  HR_Steve              was also on  HR_Portal             via EXPORTED_FILE  (2026-06-02T15:03:00Z)
+    [HOP 1]  User_Kattie           was also on  Customer_CRM          via LOGGED_OUT  (2026-06-02T15:12:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via AUTHENTICATED_TO  (2026-06-02T16:50:00Z)
+    [HOP 1]  HR_Steve              was also on  HR_Portal             via LOGGED_OUT  (2026-06-02T16:53:00Z)
+    [HOP 1]  HR_Steve              was also on  Employee_DB           via AUTHENTICATED_TO  (2026-06-03T12:36:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via QUERIED  (2026-06-03T13:17:00Z)
+    [HOP 1]  User_Charlie          was also on  Customer_CRM          via AUTHENTICATED_TO  (2026-06-03T15:35:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via EXPORTED_FILE  (2026-06-04T07:43:00Z)
+    [HOP 1]  User_Kattie           was also on  Customer_CRM          via QUERIED  (2026-06-04T09:30:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via EXPORTED_FILE  (2026-06-04T11:30:00Z)
+    [HOP 1]  User_Kattie           was also on  Customer_CRM          via AUTHENTICATED_TO  (2026-06-05T11:15:00Z)
+    [HOP 1]  User_Charlie          was also on  Customer_CRM          via QUERIED  (2026-06-05T12:01:00Z)
+    [HOP 1]  HR_Steve              was also on  HR_Portal             via QUERIED  (2026-06-05T15:21:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via LOGGED_OUT  (2026-06-05T17:11:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via QUERIED  (2026-06-08T15:29:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via AUTHENTICATED_TO  (2026-06-08T15:46:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via LOGGED_OUT  (2026-06-08T16:15:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via EXPORTED_FILE  (2026-06-09T11:38:00Z)
+    [HOP 1]  HR_Steve              was also on  Employee_DB           via EXPORTED_FILE  (2026-06-09T12:46:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via EXPORTED_FILE  (2026-06-12T10:21:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-15T13:31:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via QUERIED  (2026-06-16T07:22:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via LOGGED_OUT  (2026-06-17T15:41:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via QUERIED  (2026-06-25T15:26:00Z)
+    [HOP 1]  HR_Steve              was also on  Finance_DB            via QUERIED  (2026-06-28T11:00:00Z)
+    [HOP 1]  HR_Steve              was also on  Finance_DB            via EXPORTED_FILE  (2026-06-28T11:15:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-07-01T13:49:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via LOGGED_OUT  (2026-07-01T14:38:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via EXPORTED_FILE  (2026-07-02T10:00:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via LOGGED_OUT  (2026-07-03T17:40:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via QUERIED  (2026-07-06T13:31:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via EXPORTED_FILE  (2026-07-07T10:40:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via AUTHENTICATED_TO  (2026-07-07T12:15:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via EXPORTED_FILE  (2026-07-09T12:08:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via QUERIED  (2026-07-15T09:10:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via AUTHENTICATED_TO  (2026-07-15T15:56:00Z)
+    [HOP 1]  HR_Steve              was also on  Jump_Server_01        via QUERIED  (2026-07-16T15:23:00Z)
+    [HOP 1]  HR_Steve              was also on  Jump_Server_01        via EXPORTED_FILE  (2026-07-16T17:11:00Z)
+    [HOP 1]  HR_Steve              was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-07-20T13:13:00Z)
+    [HOP 1]  HR_Steve              was also on  Jump_Server_01        via LOGGED_OUT  (2026-07-20T16:35:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via EXPORTED_FILE  (2026-07-20T17:07:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via QUERIED  (2026-07-22T09:10:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via AUTHENTICATED_TO  (2026-07-23T17:31:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via EXPORTED_FILE  (2026-07-24T14:34:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via LOGGED_OUT  (2026-07-27T10:27:00Z)
+    [HOP 1]  HR_Steve              was also on  System_Core           via AUTHENTICATED_TO  (2026-07-31T11:49:00Z)
+    [HOP 1]  HR_Steve              was also on  System_Core           via EXPORTED_FILE  (2026-07-31T17:03:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via QUERIED  (2026-08-05T12:38:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via EXPORTED_FILE  (2026-08-05T17:21:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via LOGGED_OUT  (2026-08-05T17:43:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via AUTHENTICATED_TO  (2026-08-07T16:13:00Z)
+    [HOP 1]  HR_Steve              was also on  System_Core           via LOGGED_OUT  (2026-08-10T11:05:00Z)
+    [HOP 1]  HR_Steve              was also on  System_Core           via QUERIED  (2026-08-10T11:55:00Z)
+  ------------------------------------------------------------------
+======================================================================
+
+======================================================================
+  ALERT 2 of 4
+----------------------------------------------------------------------
+  User         : HR_Steve
+  Trigger Log  : LOG-2637
+  Asset        : Finance_DB
+  Timestamp    : 2026-06-28T13:00:00Z
+  Window Total : 148 pts  (threshold: 100 pts)
+
+  CONTRIBUTING EVENTS IN 12-HOUR WINDOW:
+  --------------------------------------------------------------------
+    [2026-06-28 11:00Z]  LOG-2635    +  5pts  action=QUERIED  asset=Finance_DB
+      reasons  : GRANTED_SPECIAL_ACCESS(Finance_DB)
+      metadata : granted_privelege=True  |  privelege_event_id=LOG-2634
+    [2026-06-28 11:15Z]  LOG-2636    + 63pts  action=EXPORTED_FILE  asset=Finance_DB
+      reasons  : HIGH_VOLUME(875000B vs 750000B limit), GRANTED_SPECIAL_ACCESS(Finance_DB)
+      metadata : granted_privelege=True  |  privelege_event_id=LOG-2634
+    [2026-06-28 13:00Z]  LOG-2637    + 80pts  action=QUERIED  asset=Finance_DB
+      reasons  : HIGH_VOLUME(1125000B vs 750000B limit), GRANTED_SPECIAL_ACCESS(Finance_DB)
+      metadata : granted_privelege=True  |  privelege_event_id=LOG-2634
+
+  LOOKBACK — 30-DAY ACCESS CHAIN ON ALERTED ASSET:
+  --------------------------------------------------------------------
+  
+  ------------------------------------------------------------------
+    [GRAPH] BACKWARD CHAIN — Asset: Finance_DB
+    Lookback: 30 days before 2026-06-28T13:00:00+00:00
+  ------------------------------------------------------------------
+    [2026-06-01T09:08:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1001  (0B)
+    [2026-06-01T10:40:00Z]  Finance_John          AUTHENTICATED_TO           LOG-1021  (0B)
+    [2026-06-01T13:11:00Z]  Finance_John          LOGGED_OUT                 LOG-1018  (0B)
+    [2026-06-02T13:34:00Z]  Finance_John          QUERIED                    LOG-1049  (76239B)
+    [2026-06-02T14:41:00Z]  Finance_John          QUERIED                    LOG-1048  (81110B)
+    [2026-06-02T15:42:00Z]  Finance_John          QUERIED                    LOG-1047  (114387B)
+    [2026-06-03T11:39:00Z]  Admin_Alice           QUERIED                    LOG-1057  (3597B)
+    [2026-06-03T12:01:00Z]  Finance_John          QUERIED                    LOG-1070  (38749B)
+    [2026-06-03T14:48:00Z]  Finance_John          AUTHENTICATED_TO           LOG-1069  (0B)
+    [2026-06-03T14:50:00Z]  Finance_John          QUERIED                    LOG-1072  (211640B)
+    [2026-06-03T16:54:00Z]  Finance_John          AUTHENTICATED_TO           LOG-1071  (0B)
+    [2026-06-04T15:53:00Z]  Admin_Alice           REVOKED_PRIVILEGE          LOG-1077  (0B)
+    [2026-06-09T09:08:00Z]  Admin_Alice           QUERIED                    LOG-1147  (1550B)
+    [2026-06-10T09:38:00Z]  Admin_Alice           LOGGED_OUT                 LOG-1175  (0B)
+    [2026-06-12T10:21:00Z]  User_Charlie          EXPORTED_FILE              LOG-1232  (85035B)
+    [2026-06-12T12:04:00Z]  Admin_Alice           APPROVED_TICKET            LOG-1223  (0B)
+    [2026-06-12T12:19:00Z]  Admin_Alice           GRANTED_PRIVILEGE          LOG-1224  (0B)
+    [2026-06-12T17:27:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1222  (0B)
+    [2026-06-15T11:00:00Z]  User_Charlie          EXPORTED_FILE              LOG-1256  (22273B)
+    [2026-06-15T13:19:00Z]  Admin_Alice           EXPORTED_FILE              LOG-1246  (4053B)
+    [2026-06-15T13:31:00Z]  User_Charlie          AUTHENTICATED_TO           LOG-1255  (0B)
+    [2026-06-16T07:22:00Z]  User_Charlie          QUERIED                    LOG-1287  (65295B)
+    [2026-06-16T11:20:00Z]  User_Charlie          EXPORTED_FILE              LOG-1285  (95998B)
+    [2026-06-16T15:04:00Z]  User_Charlie          QUERIED                    LOG-1281  (34452B)
+    [2026-06-17T15:41:00Z]  User_Charlie          LOGGED_OUT                 LOG-1313  (0B)
+    [2026-06-18T17:05:00Z]  Admin_Alice           REVOKED_PRIVILEGE          LOG-1331  (0B)
+    [2026-06-22T18:11:00Z]  Admin_Alice           EXPORTED_FILE              LOG-1387  (4946B)
+    [2026-06-24T16:52:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1444  (0B)
+    [2026-06-25T10:00:00Z]  Admin_Alice           GRANTED_PRIVILEGE          LOG-2631  (0B)
+    [2026-06-28T09:00:00Z]  Admin_Alice           APPROVED_TICKET            LOG-2633  (0B)
+    [2026-06-28T09:15:00Z]  Admin_Alice           GRANTED_PRIVILEGE          LOG-2634  (0B)
+    [2026-06-28T11:00:00Z]  HR_Steve              QUERIED                    LOG-2635  (200000B)
+    [2026-06-28T11:15:00Z]  HR_Steve              EXPORTED_FILE              LOG-2636  (675000B)
+    [2026-06-28T13:00:00Z]  HR_Steve              QUERIED                    LOG-2637  (250000B)
+  ------------------------------------------------------------------
+
+  FORWARD REACHABILITY — 2-HOP BLAST RADIUS:
+  --------------------------------------------------------------------
+  
+  ------------------------------------------------------------------
+    [GRAPH] FORWARD REACHABILITY — Origin: HR_Steve
+    Hops: 2  |  Alert time: 2026-06-28T13:00:00+00:00
+  ------------------------------------------------------------------
+    [HOP 1]  User_Charlie          was also on  System_Core           via QUERIED  (2026-06-01T07:07:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via LOGGED_OUT  (2026-06-01T08:04:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-01T09:08:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via QUERIED  (2026-06-01T09:42:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via LOGGED_OUT  (2026-06-01T09:47:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via LOGGED_OUT  (2026-06-01T10:03:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via EXPORTED_FILE  (2026-06-01T10:16:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via AUTHENTICATED_TO  (2026-06-01T10:32:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-01T10:40:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via QUERIED  (2026-06-01T10:42:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via QUERIED  (2026-06-01T11:23:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-01T12:58:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via LOGGED_OUT  (2026-06-01T13:11:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via EXPORTED_FILE  (2026-06-01T13:35:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via EXPORTED_FILE  (2026-06-01T13:55:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via AUTHENTICATED_TO  (2026-06-01T16:23:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-06-01T16:50:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via AUTHENTICATED_TO  (2026-06-01T16:56:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via LOGGED_OUT  (2026-06-01T17:43:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via LOGGED_OUT  (2026-06-02T09:05:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via EXPORTED_FILE  (2026-06-02T10:56:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-02T11:54:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via QUERIED  (2026-06-02T13:34:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via QUERIED  (2026-06-02T13:38:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via EXPORTED_FILE  (2026-06-02T14:58:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via LOGGED_OUT  (2026-06-02T15:03:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via AUTHENTICATED_TO  (2026-06-02T16:50:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via QUERIED  (2026-06-03T11:39:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via QUERIED  (2026-06-03T13:17:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via REVOKED_PRIVILEGE  (2026-06-03T18:00:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via EXPORTED_FILE  (2026-06-04T07:43:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via EXPORTED_FILE  (2026-06-04T11:30:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via REVOKED_PRIVILEGE  (2026-06-04T15:53:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via REVOKED_PRIVILEGE  (2026-06-05T08:41:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via LOGGED_OUT  (2026-06-05T17:11:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via QUERIED  (2026-06-08T15:29:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via AUTHENTICATED_TO  (2026-06-08T15:46:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via LOGGED_OUT  (2026-06-08T16:15:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via APPROVED_TICKET  (2026-06-08T17:30:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via GRANTED_PRIVILEGE  (2026-06-08T17:37:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via EXPORTED_FILE  (2026-06-09T11:38:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-06-10T09:28:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via LOGGED_OUT  (2026-06-10T09:38:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via LOGGED_OUT  (2026-06-10T10:37:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via EXPORTED_FILE  (2026-06-12T10:21:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via APPROVED_TICKET  (2026-06-12T12:04:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via GRANTED_PRIVILEGE  (2026-06-12T12:19:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via LOGGED_OUT  (2026-06-12T15:36:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via EXPORTED_FILE  (2026-06-15T13:19:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-15T13:31:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via QUERIED  (2026-06-16T07:22:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-16T10:35:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via QUERIED  (2026-06-17T11:13:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via EXPORTED_FILE  (2026-06-17T14:02:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via LOGGED_OUT  (2026-06-17T15:41:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via EXPORTED_FILE  (2026-06-18T08:13:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via AUTHENTICATED_TO  (2026-06-19T11:14:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via QUERIED  (2026-06-23T11:48:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via APPROVED_TICKET  (2026-06-25T08:48:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via GRANTED_PRIVILEGE  (2026-06-25T08:55:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via GRANTED_PRIVILEGE  (2026-06-25T10:30:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via QUERIED  (2026-06-25T15:26:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via QUERIED  (2026-06-29T08:45:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via QUERIED  (2026-06-29T17:33:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via REVOKED_PRIVILEGE  (2026-06-30T15:51:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-07-01T13:49:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via LOGGED_OUT  (2026-07-01T14:38:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via EXPORTED_FILE  (2026-07-02T10:00:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via LOGGED_OUT  (2026-07-03T17:40:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via QUERIED  (2026-07-06T13:31:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via EXPORTED_FILE  (2026-07-07T10:40:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via AUTHENTICATED_TO  (2026-07-07T12:15:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via LOGGED_OUT  (2026-07-09T09:37:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via EXPORTED_FILE  (2026-07-09T12:08:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via QUERIED  (2026-07-15T09:10:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via AUTHENTICATED_TO  (2026-07-15T15:56:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via APPROVED_TICKET  (2026-07-15T16:01:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via GRANTED_PRIVILEGE  (2026-07-15T16:15:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via EXPORTED_FILE  (2026-07-20T17:07:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via QUERIED  (2026-07-22T09:10:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via AUTHENTICATED_TO  (2026-07-23T17:31:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via EXPORTED_FILE  (2026-07-24T14:34:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via LOGGED_OUT  (2026-07-27T10:27:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via REVOKED_PRIVILEGE  (2026-07-27T12:34:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via APPROVED_TICKET  (2026-07-31T17:15:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via QUERIED  (2026-08-05T12:38:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via EXPORTED_FILE  (2026-08-05T17:21:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via LOGGED_OUT  (2026-08-05T17:43:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via AUTHENTICATED_TO  (2026-08-07T16:13:00Z)
+  ------------------------------------------------------------------
+======================================================================
+
+======================================================================
+  ALERT 3 of 4
+----------------------------------------------------------------------
+  User         : HR_Steve
+  Trigger Log  : LOG-1533
+  Asset        : HR_Portal
+  Timestamp    : 2026-06-29T09:40:00Z
+  Window Total : 110 pts  (threshold: 100 pts)
+
+  CONTRIBUTING EVENTS IN 12-HOUR WINDOW:
+  --------------------------------------------------------------------
+    [2026-06-29 09:40Z]  LOG-1533    +110pts  action=QUERIED  asset=HR_Portal
+      reasons  : HIGH_VOLUME(1653377B vs 750000B limit)
+
+  LOOKBACK — 30-DAY ACCESS CHAIN ON ALERTED ASSET:
+  --------------------------------------------------------------------
+  
+  ------------------------------------------------------------------
+    [GRAPH] BACKWARD CHAIN — Asset: HR_Portal
+    Lookback: 30 days before 2026-06-29T09:40:00+00:00
+  ------------------------------------------------------------------
+    [2026-06-01T09:42:00Z]  User_Charlie          QUERIED                    LOG-1012  (53390B)
+    [2026-06-01T10:03:00Z]  User_Charlie          LOGGED_OUT                 LOG-1013  (0B)
+    [2026-06-01T10:42:00Z]  User_Kattie           QUERIED                    LOG-1026  (35320B)
+    [2026-06-01T11:18:00Z]  HR_Steve              AUTHENTICATED_TO           LOG-1016  (0B)
+    [2026-06-01T12:58:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1024  (0B)
+    [2026-06-01T15:44:00Z]  User_Charlie          QUERIED                    LOG-1014  (83701B)
+    [2026-06-02T09:05:00Z]  User_Kattie           LOGGED_OUT                 LOG-1050  (0B)
+    [2026-06-02T11:18:00Z]  User_Charlie          LOGGED_OUT                 LOG-1040  (0B)
+    [2026-06-02T11:54:00Z]  User_Charlie          AUTHENTICATED_TO           LOG-1042  (0B)
+    [2026-06-02T12:40:00Z]  User_Charlie          QUERIED                    LOG-1041  (73559B)
+    [2026-06-02T13:34:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1052  (0B)
+    [2026-06-02T14:58:00Z]  User_Kattie           EXPORTED_FILE              LOG-1054  (30670B)
+    [2026-06-02T15:03:00Z]  HR_Steve              EXPORTED_FILE              LOG-1045  (56822B)
+    [2026-06-02T16:53:00Z]  HR_Steve              LOGGED_OUT                 LOG-1044  (0B)
+    [2026-06-02T17:47:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1051  (0B)
+    [2026-06-03T16:33:00Z]  HR_Steve              EXPORTED_FILE              LOG-1068  (35057B)
+    [2026-06-03T17:27:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1074  (0B)
+    [2026-06-03T18:00:00Z]  Admin_Alice           REVOKED_PRIVILEGE          LOG-1056  (0B)
+    [2026-06-04T10:02:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1095  (0B)
+    [2026-06-04T11:45:00Z]  HR_Steve              EXPORTED_FILE              LOG-1089  (142938B)
+    [2026-06-04T13:22:00Z]  HR_Steve              EXPORTED_FILE              LOG-1086  (134643B)
+    [2026-06-05T09:24:00Z]  User_Kattie           LOGGED_OUT                 LOG-1121  (0B)
+    [2026-06-05T14:01:00Z]  HR_Steve              AUTHENTICATED_TO           LOG-1115  (0B)
+    [2026-06-05T14:41:00Z]  User_Kattie           QUERIED                    LOG-1117  (7405B)
+    [2026-06-05T15:21:00Z]  HR_Steve              QUERIED                    LOG-1113  (133134B)
+    [2026-06-05T17:17:00Z]  User_Kattie           LOGGED_OUT                 LOG-1118  (0B)
+    [2026-06-08T12:44:00Z]  HR_Steve              AUTHENTICATED_TO           LOG-1138  (0B)
+    [2026-06-08T14:13:00Z]  HR_Steve              LOGGED_OUT                 LOG-1137  (0B)
+    [2026-06-08T17:58:00Z]  HR_Steve              QUERIED                    LOG-1136  (135640B)
+    [2026-06-09T14:59:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1173  (0B)
+    [2026-06-09T17:19:00Z]  HR_Steve              EXPORTED_FILE              LOG-1165  (87415B)
+    [2026-06-09T17:57:00Z]  HR_Steve              LOGGED_OUT                 LOG-1162  (0B)
+    [2026-06-10T11:04:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1199  (0B)
+    [2026-06-10T12:44:00Z]  HR_Steve              QUERIED                    LOG-1187  (143872B)
+    [2026-06-10T13:34:00Z]  User_Kattie           LOGGED_OUT                 LOG-1196  (0B)
+    [2026-06-10T14:24:00Z]  HR_Steve              QUERIED                    LOG-1186  (127791B)
+    [2026-06-10T15:09:00Z]  HR_Steve              QUERIED                    LOG-1188  (125596B)
+    [2026-06-10T15:12:00Z]  User_Kattie           QUERIED                    LOG-1197  (1491B)
+    [2026-06-10T17:14:00Z]  User_Kattie           EXPORTED_FILE              LOG-1194  (12027B)
+    [2026-06-10T17:37:00Z]  HR_Steve              LOGGED_OUT                 LOG-1185  (0B)
+    [2026-06-11T17:47:00Z]  User_Kattie           QUERIED                    LOG-1219  (70031B)
+    [2026-06-12T11:59:00Z]  HR_Steve              QUERIED                    LOG-1238  (20687B)
+    [2026-06-12T13:01:00Z]  HR_Steve              AUTHENTICATED_TO           LOG-1236  (0B)
+    [2026-06-12T14:45:00Z]  HR_Steve              LOGGED_OUT                 LOG-1239  (0B)
+    [2026-06-12T15:19:00Z]  User_Kattie           EXPORTED_FILE              LOG-1244  (27649B)
+    [2026-06-12T17:30:00Z]  HR_Steve              LOGGED_OUT                 LOG-1235  (0B)
+    [2026-06-15T10:51:00Z]  User_Kattie           LOGGED_OUT                 LOG-1270  (0B)
+    [2026-06-15T11:59:00Z]  HR_Steve              LOGGED_OUT                 LOG-1260  (0B)
+    [2026-06-15T17:07:00Z]  User_Kattie           QUERIED                    LOG-1269  (45683B)
+    [2026-06-15T17:36:00Z]  HR_Steve              QUERIED                    LOG-1261  (87704B)
+    [2026-06-16T10:35:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1272  (0B)
+    [2026-06-16T12:05:00Z]  User_Kattie           EXPORTED_FILE              LOG-1298  (44753B)
+    [2026-06-16T14:49:00Z]  HR_Steve              QUERIED                    LOG-1289  (59749B)
+    [2026-06-16T16:12:00Z]  HR_Steve              EXPORTED_FILE              LOG-1288  (7782B)
+    [2026-06-17T11:13:00Z]  Admin_Alice           QUERIED                    LOG-1304  (1525B)
+    [2026-06-17T11:39:00Z]  User_Kattie           LOGGED_OUT                 LOG-1327  (0B)
+    [2026-06-17T14:00:00Z]  HR_Steve              EXPORTED_FILE              LOG-1320  (19755B)
+    [2026-06-17T14:02:00Z]  Admin_Alice           EXPORTED_FILE              LOG-1303  (4779B)
+    [2026-06-17T15:39:00Z]  User_Kattie           QUERIED                    LOG-1324  (99257B)
+    [2026-06-18T09:58:00Z]  HR_Steve              EXPORTED_FILE              LOG-1345  (117821B)
+    [2026-06-18T11:10:00Z]  User_Kattie           QUERIED                    LOG-1360  (49204B)
+    [2026-06-18T11:54:00Z]  User_Kattie           EXPORTED_FILE              LOG-1357  (56323B)
+    [2026-06-18T12:44:00Z]  HR_Steve              QUERIED                    LOG-1346  (43007B)
+    [2026-06-18T13:37:00Z]  HR_Steve              QUERIED                    LOG-1350  (98043B)
+    [2026-06-18T14:54:00Z]  User_Kattie           EXPORTED_FILE              LOG-1358  (61957B)
+    [2026-06-18T16:29:00Z]  User_Kattie           QUERIED                    LOG-1361  (92785B)
+    [2026-06-18T17:19:00Z]  HR_Steve              LOGGED_OUT                 LOG-1347  (0B)
+    [2026-06-18T17:40:00Z]  User_Kattie           EXPORTED_FILE              LOG-1354  (80345B)
+    [2026-06-18T17:52:00Z]  HR_Steve              QUERIED                    LOG-1348  (65838B)
+    [2026-06-19T09:05:00Z]  User_Kattie           QUERIED                    LOG-1385  (97758B)
+    [2026-06-19T10:35:00Z]  HR_Steve              QUERIED                    LOG-1377  (75426B)
+    [2026-06-19T15:29:00Z]  User_Kattie           QUERIED                    LOG-1383  (16379B)
+    [2026-06-19T16:14:00Z]  HR_Steve              LOGGED_OUT                 LOG-1378  (0B)
+    [2026-06-19T17:27:00Z]  HR_Steve              LOGGED_OUT                 LOG-1379  (0B)
+    [2026-06-22T09:00:00Z]  HR_Steve              AUTHENTICATED_TO           LOG-1404  (0B)
+    [2026-06-22T11:54:00Z]  HR_Steve              EXPORTED_FILE              LOG-1402  (60439B)
+    [2026-06-22T16:25:00Z]  User_Kattie           QUERIED                    LOG-1412  (14061B)
+    [2026-06-22T17:05:00Z]  HR_Steve              LOGGED_OUT                 LOG-1401  (0B)
+    [2026-06-22T17:21:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1389  (0B)
+    [2026-06-22T17:36:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1410  (0B)
+    [2026-06-23T09:03:00Z]  User_Kattie           QUERIED                    LOG-1438  (60833B)
+    [2026-06-23T11:13:00Z]  HR_Steve              EXPORTED_FILE              LOG-1434  (144576B)
+    [2026-06-23T12:33:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1439  (0B)
+    [2026-06-23T12:34:00Z]  HR_Steve              EXPORTED_FILE              LOG-1431  (81343B)
+    [2026-06-23T12:40:00Z]  User_Kattie           QUERIED                    LOG-1443  (25908B)
+    [2026-06-23T17:13:00Z]  HR_Steve              EXPORTED_FILE              LOG-1435  (80038B)
+    [2026-06-24T08:55:00Z]  Admin_Alice           EXPORTED_FILE              LOG-1446  (3396B)
+    [2026-06-24T17:15:00Z]  User_Kattie           EXPORTED_FILE              LOG-1464  (37981B)
+    [2026-06-24T17:26:00Z]  HR_Steve              LOGGED_OUT                 LOG-1458  (0B)
+    [2026-06-25T10:40:00Z]  User_Kattie           QUERIED                    LOG-1495  (47577B)
+    [2026-06-25T11:28:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1492  (0B)
+    [2026-06-25T11:54:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1491  (0B)
+    [2026-06-25T13:24:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1497  (0B)
+    [2026-06-26T10:32:00Z]  HR_Steve              LOGGED_OUT                 LOG-1509  (0B)
+    [2026-06-26T10:58:00Z]  User_Kattie           QUERIED                    LOG-1519  (68631B)
+    [2026-06-26T11:10:00Z]  User_Kattie           AUTHENTICATED_TO           LOG-1514  (0B)
+    [2026-06-26T14:47:00Z]  HR_Steve              QUERIED                    LOG-1508  (66251B)
+    [2026-06-26T16:43:00Z]  User_Kattie           EXPORTED_FILE              LOG-1517  (60848B)
+    [2026-06-26T17:14:00Z]  User_Kattie           QUERIED                    LOG-1512  (96269B)
+    [2026-06-29T09:40:00Z]  HR_Steve              QUERIED                    LOG-1533  (128377B)
+  ------------------------------------------------------------------
+
+  FORWARD REACHABILITY — 2-HOP BLAST RADIUS:
+  --------------------------------------------------------------------
+  
+  ------------------------------------------------------------------
+    [GRAPH] FORWARD REACHABILITY — Origin: HR_Steve
+    Hops: 2  |  Alert time: 2026-06-29T09:40:00+00:00
+  ------------------------------------------------------------------
+    [HOP 1]  User_Charlie          was also on  System_Core           via QUERIED  (2026-06-01T07:07:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via LOGGED_OUT  (2026-06-01T08:04:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-01T09:08:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via QUERIED  (2026-06-01T09:42:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via LOGGED_OUT  (2026-06-01T09:47:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via LOGGED_OUT  (2026-06-01T10:03:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via EXPORTED_FILE  (2026-06-01T10:16:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via AUTHENTICATED_TO  (2026-06-01T10:32:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-01T10:40:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via QUERIED  (2026-06-01T10:42:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via QUERIED  (2026-06-01T11:23:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-01T12:58:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via LOGGED_OUT  (2026-06-01T13:11:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via EXPORTED_FILE  (2026-06-01T13:35:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via EXPORTED_FILE  (2026-06-01T13:55:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via AUTHENTICATED_TO  (2026-06-01T16:23:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-06-01T16:50:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via AUTHENTICATED_TO  (2026-06-01T16:56:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via LOGGED_OUT  (2026-06-01T17:43:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via LOGGED_OUT  (2026-06-02T09:05:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via EXPORTED_FILE  (2026-06-02T10:56:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-02T11:54:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via QUERIED  (2026-06-02T13:34:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via QUERIED  (2026-06-02T13:38:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via EXPORTED_FILE  (2026-06-02T14:58:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via LOGGED_OUT  (2026-06-02T15:03:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via AUTHENTICATED_TO  (2026-06-02T16:50:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via QUERIED  (2026-06-03T11:39:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via QUERIED  (2026-06-03T13:17:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via REVOKED_PRIVILEGE  (2026-06-03T18:00:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via EXPORTED_FILE  (2026-06-04T07:43:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via EXPORTED_FILE  (2026-06-04T11:30:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via REVOKED_PRIVILEGE  (2026-06-04T15:53:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via REVOKED_PRIVILEGE  (2026-06-05T08:41:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via LOGGED_OUT  (2026-06-05T17:11:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via QUERIED  (2026-06-08T15:29:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via AUTHENTICATED_TO  (2026-06-08T15:46:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via LOGGED_OUT  (2026-06-08T16:15:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via APPROVED_TICKET  (2026-06-08T17:30:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via GRANTED_PRIVILEGE  (2026-06-08T17:37:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via EXPORTED_FILE  (2026-06-09T11:38:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-06-10T09:28:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via LOGGED_OUT  (2026-06-10T09:38:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via LOGGED_OUT  (2026-06-10T10:37:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via EXPORTED_FILE  (2026-06-12T10:21:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via APPROVED_TICKET  (2026-06-12T12:04:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via GRANTED_PRIVILEGE  (2026-06-12T12:19:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via LOGGED_OUT  (2026-06-12T15:36:00Z)
+    [HOP 1]  Admin_Alice           was also on  Finance_DB            via EXPORTED_FILE  (2026-06-15T13:19:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-15T13:31:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via QUERIED  (2026-06-16T07:22:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-16T10:35:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via QUERIED  (2026-06-17T11:13:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via EXPORTED_FILE  (2026-06-17T14:02:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via LOGGED_OUT  (2026-06-17T15:41:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via EXPORTED_FILE  (2026-06-18T08:13:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via AUTHENTICATED_TO  (2026-06-19T11:14:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via QUERIED  (2026-06-23T11:48:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via APPROVED_TICKET  (2026-06-25T08:48:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via GRANTED_PRIVILEGE  (2026-06-25T08:55:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via GRANTED_PRIVILEGE  (2026-06-25T10:30:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via QUERIED  (2026-06-25T15:26:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via QUERIED  (2026-06-29T08:45:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via QUERIED  (2026-06-29T17:33:00Z)
+    [HOP 1]  Admin_Alice           was also on  Employee_DB           via REVOKED_PRIVILEGE  (2026-06-30T15:51:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-07-01T13:49:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via LOGGED_OUT  (2026-07-01T14:38:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via EXPORTED_FILE  (2026-07-02T10:00:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via LOGGED_OUT  (2026-07-03T17:40:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via QUERIED  (2026-07-06T13:31:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via EXPORTED_FILE  (2026-07-07T10:40:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via AUTHENTICATED_TO  (2026-07-07T12:15:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via LOGGED_OUT  (2026-07-09T09:37:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via EXPORTED_FILE  (2026-07-09T12:08:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via QUERIED  (2026-07-15T09:10:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via AUTHENTICATED_TO  (2026-07-15T15:56:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via APPROVED_TICKET  (2026-07-15T16:01:00Z)
+    [HOP 1]  Admin_Alice           was also on  HR_Portal             via GRANTED_PRIVILEGE  (2026-07-15T16:15:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via EXPORTED_FILE  (2026-07-20T17:07:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via QUERIED  (2026-07-22T09:10:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via AUTHENTICATED_TO  (2026-07-23T17:31:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via EXPORTED_FILE  (2026-07-24T14:34:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via LOGGED_OUT  (2026-07-27T10:27:00Z)
+    [HOP 1]  Admin_Alice           was also on  Jump_Server_01        via REVOKED_PRIVILEGE  (2026-07-27T12:34:00Z)
+    [HOP 1]  Admin_Alice           was also on  System_Core           via APPROVED_TICKET  (2026-07-31T17:15:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via QUERIED  (2026-08-05T12:38:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via EXPORTED_FILE  (2026-08-05T17:21:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via LOGGED_OUT  (2026-08-05T17:43:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via AUTHENTICATED_TO  (2026-08-07T16:13:00Z)
+  ------------------------------------------------------------------
+======================================================================
+
+======================================================================
+  ALERT 4 of 4
+----------------------------------------------------------------------
+  User         : Admin_Alice
+  Trigger Log  : LOG-2640
+  Asset        : Finance_DB
+  Timestamp    : 2026-07-02T09:00:00Z
+  Window Total : 180 pts  (threshold: 100 pts)
+
+  CONTRIBUTING EVENTS IN 12-HOUR WINDOW:
+  --------------------------------------------------------------------
+    [2026-07-02 09:00Z]  LOG-2640    +180pts  action=APPROVED_TICKET  asset=Finance_DB
+      reasons  : UNVERIFIED_SIGNATURE
+      metadata : granted_to=Contractor_Bob
+
+  LOOKBACK — 30-DAY ACCESS CHAIN ON ALERTED ASSET:
+  --------------------------------------------------------------------
+  
+  ------------------------------------------------------------------
+    [GRAPH] BACKWARD CHAIN — Asset: Finance_DB
+    Lookback: 30 days before 2026-07-02T09:00:00+00:00
+  ------------------------------------------------------------------
+    [2026-06-02T13:34:00Z]  Finance_John          QUERIED                    LOG-1049  (76239B)
+    [2026-06-02T14:41:00Z]  Finance_John          QUERIED                    LOG-1048  (81110B)
+    [2026-06-02T15:42:00Z]  Finance_John          QUERIED                    LOG-1047  (114387B)
+    [2026-06-03T11:39:00Z]  Admin_Alice           QUERIED                    LOG-1057  (3597B)
+    [2026-06-03T12:01:00Z]  Finance_John          QUERIED                    LOG-1070  (38749B)
+    [2026-06-03T14:48:00Z]  Finance_John          AUTHENTICATED_TO           LOG-1069  (0B)
+    [2026-06-03T14:50:00Z]  Finance_John          QUERIED                    LOG-1072  (211640B)
+    [2026-06-03T16:54:00Z]  Finance_John          AUTHENTICATED_TO           LOG-1071  (0B)
+    [2026-06-04T15:53:00Z]  Admin_Alice           REVOKED_PRIVILEGE          LOG-1077  (0B)
+    [2026-06-09T09:08:00Z]  Admin_Alice           QUERIED                    LOG-1147  (1550B)
+    [2026-06-10T09:38:00Z]  Admin_Alice           LOGGED_OUT                 LOG-1175  (0B)
+    [2026-06-12T10:21:00Z]  User_Charlie          EXPORTED_FILE              LOG-1232  (85035B)
+    [2026-06-12T12:04:00Z]  Admin_Alice           APPROVED_TICKET            LOG-1223  (0B)
+    [2026-06-12T12:19:00Z]  Admin_Alice           GRANTED_PRIVILEGE          LOG-1224  (0B)
+    [2026-06-12T17:27:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1222  (0B)
+    [2026-06-15T11:00:00Z]  User_Charlie          EXPORTED_FILE              LOG-1256  (22273B)
+    [2026-06-15T13:19:00Z]  Admin_Alice           EXPORTED_FILE              LOG-1246  (4053B)
+    [2026-06-15T13:31:00Z]  User_Charlie          AUTHENTICATED_TO           LOG-1255  (0B)
+    [2026-06-16T07:22:00Z]  User_Charlie          QUERIED                    LOG-1287  (65295B)
+    [2026-06-16T11:20:00Z]  User_Charlie          EXPORTED_FILE              LOG-1285  (95998B)
+    [2026-06-16T15:04:00Z]  User_Charlie          QUERIED                    LOG-1281  (34452B)
+    [2026-06-17T15:41:00Z]  User_Charlie          LOGGED_OUT                 LOG-1313  (0B)
+    [2026-06-18T17:05:00Z]  Admin_Alice           REVOKED_PRIVILEGE          LOG-1331  (0B)
+    [2026-06-22T18:11:00Z]  Admin_Alice           EXPORTED_FILE              LOG-1387  (4946B)
+    [2026-06-24T16:52:00Z]  Admin_Alice           AUTHENTICATED_TO           LOG-1444  (0B)
+    [2026-06-25T10:00:00Z]  Admin_Alice           GRANTED_PRIVILEGE          LOG-2631  (0B)
+    [2026-06-28T09:00:00Z]  Admin_Alice           APPROVED_TICKET            LOG-2633  (0B)
+    [2026-06-28T09:15:00Z]  Admin_Alice           GRANTED_PRIVILEGE          LOG-2634  (0B)
+    [2026-06-28T11:00:00Z]  HR_Steve              QUERIED                    LOG-2635  (200000B)
+    [2026-06-28T11:15:00Z]  HR_Steve              EXPORTED_FILE              LOG-2636  (675000B)
+    [2026-06-28T13:00:00Z]  HR_Steve              QUERIED                    LOG-2637  (250000B)
+    [2026-06-28T14:30:00Z]  HR_Steve              EXPORTED_FILE              LOG-2638  (250000B)
+    [2026-06-28T16:00:00Z]  HR_Steve              QUERIED                    LOG-2639  (150000B)
+    [2026-07-02T09:00:00Z]  Admin_Alice           APPROVED_TICKET            LOG-2640  (0B)
+  ------------------------------------------------------------------
+
+  FORWARD REACHABILITY — 2-HOP BLAST RADIUS:
+  --------------------------------------------------------------------
+  
+  ------------------------------------------------------------------
+    [GRAPH] FORWARD REACHABILITY — Origin: Admin_Alice
+    Hops: 2  |  Alert time: 2026-07-02T09:00:00+00:00
+  ------------------------------------------------------------------
+    [HOP 1]  User_Charlie          was also on  System_Core           via QUERIED  (2026-06-01T07:07:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via LOGGED_OUT  (2026-06-01T08:04:00Z)
+    [HOP 1]  HR_Steve              was also on  Employee_DB           via LOGGED_OUT  (2026-06-01T09:28:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via QUERIED  (2026-06-01T09:42:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via LOGGED_OUT  (2026-06-01T10:03:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via EXPORTED_FILE  (2026-06-01T10:16:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via AUTHENTICATED_TO  (2026-06-01T10:32:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-01T10:40:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via QUERIED  (2026-06-01T10:42:00Z)
+    [HOP 1]  HR_Steve              was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-01T11:18:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via QUERIED  (2026-06-01T11:23:00Z)
+    [HOP 1]  Finance_John          was also on  Jira                  via LOGGED_OUT  (2026-06-01T12:23:00Z)
+    [HOP 1]  User_Kattie           was also on  Customer_CRM          via EXPORTED_FILE  (2026-06-01T12:40:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-01T12:58:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via LOGGED_OUT  (2026-06-01T13:11:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via EXPORTED_FILE  (2026-06-01T13:55:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-06-01T16:50:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via AUTHENTICATED_TO  (2026-06-01T16:56:00Z)
+    [HOP 1]  Finance_John          was also on  Jira                  via QUERIED  (2026-06-01T17:39:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via LOGGED_OUT  (2026-06-01T17:43:00Z)
+    [HOP 1]  User_Charlie          was also on  Customer_CRM          via LOGGED_OUT  (2026-06-02T08:53:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via LOGGED_OUT  (2026-06-02T09:05:00Z)
+    [HOP 1]  HR_Steve              was also on  Employee_DB           via QUERIED  (2026-06-02T09:31:00Z)
+    [HOP 1]  User_Charlie          was also on  HR_Portal             via AUTHENTICATED_TO  (2026-06-02T11:54:00Z)
+    [HOP 1]  User_Charlie          was also on  Customer_CRM          via EXPORTED_FILE  (2026-06-02T12:33:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via QUERIED  (2026-06-02T13:34:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via QUERIED  (2026-06-02T13:38:00Z)
+    [HOP 1]  User_Kattie           was also on  HR_Portal             via EXPORTED_FILE  (2026-06-02T14:58:00Z)
+    [HOP 1]  Contractor_Bob        was also on  System_Core           via LOGGED_OUT  (2026-06-02T15:03:00Z)
+    [HOP 1]  HR_Steve              was also on  HR_Portal             via EXPORTED_FILE  (2026-06-02T15:03:00Z)
+    [HOP 1]  User_Kattie           was also on  Customer_CRM          via LOGGED_OUT  (2026-06-02T15:12:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via AUTHENTICATED_TO  (2026-06-02T16:50:00Z)
+    [HOP 1]  HR_Steve              was also on  HR_Portal             via LOGGED_OUT  (2026-06-02T16:53:00Z)
+    [HOP 1]  HR_Steve              was also on  Employee_DB           via AUTHENTICATED_TO  (2026-06-03T12:36:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via QUERIED  (2026-06-03T13:17:00Z)
+    [HOP 1]  User_Charlie          was also on  Customer_CRM          via AUTHENTICATED_TO  (2026-06-03T15:35:00Z)
+    [HOP 1]  User_Charlie          was also on  System_Core           via EXPORTED_FILE  (2026-06-04T07:43:00Z)
+    [HOP 1]  User_Kattie           was also on  Customer_CRM          via QUERIED  (2026-06-04T09:30:00Z)
+    [HOP 1]  User_Kattie           was also on  System_Core           via EXPORTED_FILE  (2026-06-04T11:30:00Z)
+    [HOP 1]  User_Kattie           was also on  Customer_CRM          via AUTHENTICATED_TO  (2026-06-05T11:15:00Z)
+    [HOP 1]  User_Charlie          was also on  Customer_CRM          via QUERIED  (2026-06-05T12:01:00Z)
+    [HOP 1]  HR_Steve              was also on  HR_Portal             via QUERIED  (2026-06-05T15:21:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Jump_Server_01        via LOGGED_OUT  (2026-06-05T17:11:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via QUERIED  (2026-06-08T15:29:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via AUTHENTICATED_TO  (2026-06-08T15:46:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via LOGGED_OUT  (2026-06-08T16:15:00Z)
+    [HOP 1]  Finance_John          was also on  Employee_DB           via EXPORTED_FILE  (2026-06-09T11:38:00Z)
+    [HOP 1]  HR_Steve              was also on  Employee_DB           via EXPORTED_FILE  (2026-06-09T12:46:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via EXPORTED_FILE  (2026-06-12T10:21:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via AUTHENTICATED_TO  (2026-06-15T13:31:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via QUERIED  (2026-06-16T07:22:00Z)
+    [HOP 1]  User_Charlie          was also on  Finance_DB            via LOGGED_OUT  (2026-06-17T15:41:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via QUERIED  (2026-06-25T15:26:00Z)
+    [HOP 1]  HR_Steve              was also on  Finance_DB            via QUERIED  (2026-06-28T11:00:00Z)
+    [HOP 1]  HR_Steve              was also on  Finance_DB            via EXPORTED_FILE  (2026-06-28T11:15:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-07-01T13:49:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via LOGGED_OUT  (2026-07-01T14:38:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via EXPORTED_FILE  (2026-07-02T10:00:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via LOGGED_OUT  (2026-07-03T17:40:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via QUERIED  (2026-07-06T13:31:00Z)
+    [HOP 1]  Finance_John          was also on  Jump_Server_01        via EXPORTED_FILE  (2026-07-07T10:40:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via AUTHENTICATED_TO  (2026-07-07T12:15:00Z)
+    [HOP 1]  User_Kattie           was also on  Finance_DB            via EXPORTED_FILE  (2026-07-09T12:08:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via QUERIED  (2026-07-15T09:10:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via AUTHENTICATED_TO  (2026-07-15T15:56:00Z)
+    [HOP 1]  HR_Steve              was also on  Jump_Server_01        via QUERIED  (2026-07-16T15:23:00Z)
+    [HOP 1]  HR_Steve              was also on  Jump_Server_01        via EXPORTED_FILE  (2026-07-16T17:11:00Z)
+    [HOP 1]  HR_Steve              was also on  Jump_Server_01        via AUTHENTICATED_TO  (2026-07-20T13:13:00Z)
+    [HOP 1]  HR_Steve              was also on  Jump_Server_01        via LOGGED_OUT  (2026-07-20T16:35:00Z)
+    [HOP 1]  Contractor_Bob        was also on  HR_Portal             via EXPORTED_FILE  (2026-07-20T17:07:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via QUERIED  (2026-07-22T09:10:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via AUTHENTICATED_TO  (2026-07-23T17:31:00Z)
+    [HOP 1]  Finance_John          was also on  Finance_DB            via EXPORTED_FILE  (2026-07-24T14:34:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Finance_DB            via LOGGED_OUT  (2026-07-27T10:27:00Z)
+    [HOP 1]  HR_Steve              was also on  System_Core           via AUTHENTICATED_TO  (2026-07-31T11:49:00Z)
+    [HOP 1]  HR_Steve              was also on  System_Core           via EXPORTED_FILE  (2026-07-31T17:03:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via QUERIED  (2026-08-05T12:38:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via EXPORTED_FILE  (2026-08-05T17:21:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via LOGGED_OUT  (2026-08-05T17:43:00Z)
+    [HOP 1]  Contractor_Bob        was also on  Employee_DB           via AUTHENTICATED_TO  (2026-08-07T16:13:00Z)
+    [HOP 1]  HR_Steve              was also on  System_Core           via LOGGED_OUT  (2026-08-10T11:05:00Z)
+    [HOP 1]  HR_Steve              was also on  System_Core           via QUERIED  (2026-08-10T11:55:00Z)
+  ------------------------------------------------------------------
+======================================================================
+
+======================================================================
+                        INVESTIGATION SUMMARY
+======================================================================
+  Total logs processed : 1644
+  Unique users         : 6
+  Unique assets        : 8
+  Alerts fired         : 4
+
+  USER                   TRIGGER LOG  ASSET                  TIMESTAMP               SCORE
+  ----------------------------------------------------------------------------------------
+  Admin_Alice            LOG-2631     Finance_DB             2026-06-25T10:00:00Z     150pts
+  HR_Steve               LOG-2637     Finance_DB             2026-06-28T13:00:00Z     148pts
+  HR_Steve               LOG-1533     HR_Portal              2026-06-29T09:40:00Z     110pts
+  Admin_Alice            LOG-2640     Finance_DB             2026-07-02T09:00:00Z     180pts
+
+======================================================================

@@ -54,12 +54,4 @@ Thumbs.db
 *.swo
 
 # Project specific generated files
-Backend/alerts_dump.txt
-Backend/alerts_report.json
-Backend/investigation_report.txt
-Backend/synthetic_banking_logs.json
-Backend/logger_public_key.hex
-
-Data\ Generator/synthetic_banking_logs.json
-Data\ Generator/logger_public_key.hex
 Data\ Generator/evidence_evaluator_graph.html
