@@ -1,0 +1,169 @@
+{
+  "scenario_events_list": [
+    [
+      {
+        "_comment": "Anomaly: High Volume Data Exfiltration (Authorized Asset)",
+        "time": "09:00:00",
+        "user": "User_Charlie",
+        "asset": "Customer_CRM",
+        "action": "EXPORTED_FILE",
+        "bytes": 200000,
+        "meta": {}
+      },
+      {
+        "_comment": "Anomaly: High Volume Data Exfiltration (Authorized Asset)",
+        "time": "09:15:00",
+        "user": "User_Charlie",
+        "asset": "Customer_CRM",
+        "action": "EXPORTED_FILE",
+        "bytes": 280000,
+        "meta": {}
+      },
+      {
+        "_comment": "Anomaly: High Volume Data Exfiltration (Authorized Asset)",
+        "time": "10:30:00",
+        "user": "User_Charlie",
+        "asset": "Customer_CRM",
+        "action": "EXPORTED_FILE",
+        "bytes": 200000,
+        "meta": {}
+      },
+      {
+        "_comment": "Anomaly: High Volume Data Exfiltration (Authorized Asset)",
+        "time": "11:15:00",
+        "user": "User_Charlie",
+        "asset": "Customer_CRM",
+        "action": "EXPORTED_FILE",
+        "bytes": 220000,
+        "meta": {}
+      }
+    ],
+    [
+      {
+        "_comment": "Anomaly: Unapproved Privilege Grant (Privilege Escalation without Approved Ticket)",
+        "time": "10:00:00",
+        "user": "Admin_Alice",
+        "asset": "Finance_DB",
+        "action": "GRANTED_PRIVILEGE",
+        "bytes": 0,
+        "meta": {
+          "granted_to": "Contractor_Bob"
+        }
+      },
+      {
+        "time": "10:30:00",
+        "user": "Admin_Alice",
+        "asset": "System_Core",
+        "action": "GRANTED_PRIVILEGE",
+        "bytes": 0,
+        "meta": {
+          "granted_to": "HR_Steve"
+        }
+      }
+    ],
+    [
+      {
+        "_comment": "Anomaly: High Volume Data Exfiltration on Granted Privilege",
+        "time": "09:00:00",
+        "user": "Admin_Alice",
+        "asset": "Finance_DB",
+        "action": "APPROVED_TICKET",
+        "bytes": 0,
+        "meta": {
+          "granted_to": "HR_Steve"
+        }
+      },
+      {
+        "time": "09:15:00",
+        "user": "Admin_Alice",
+        "asset": "Finance_DB",
+        "action": "GRANTED_PRIVILEGE",
+        "bytes": 0,
+        "meta": {
+          "granted_to": "HR_Steve"
+        }
+      },
+      {
+        "time": "11:00:00",
+        "user": "HR_Steve",
+        "asset": "Finance_DB",
+        "action": "QUERIED",
+        "bytes": 200000,
+        "meta": {}
+      },
+      {
+        "time": "11:15:00",
+        "user": "HR_Steve",
+        "asset": "Finance_DB",
+        "action": "EXPORTED_FILE",
+        "bytes": 675000,
+        "meta": {}
+      },
+      {
+        "time": "13:00:00",
+        "user": "HR_Steve",
+        "asset": "Finance_DB",
+        "action": "QUERIED",
+        "bytes": 250000,
+        "meta": {}
+      },
+      {
+        "time": "14:30:00",
+        "user": "HR_Steve",
+        "asset": "Finance_DB",
+        "action": "EXPORTED_FILE",
+        "bytes": 250000,
+        "meta": {}
+      },
+      {
+        "time": "16:00:00",
+        "user": "HR_Steve",
+        "asset": "Finance_DB",
+        "action": "QUERIED",
+        "bytes": 150000,
+        "meta": {}
+      }
+    ],
+    [
+      {
+        "_comment": "Anomaly: Cryptographic Signature Verification Failed (Invalid QPC on Approval/Grant)",
+        "time": "09:00:00",
+        "user": "Admin_Alice",
+        "asset": "Finance_DB",
+        "action": "APPROVED_TICKET",
+        "bytes": 0,
+        "meta": {
+          "granted_to": "Contractor_Bob"
+        },
+        "invalid_qpc": true
+      },
+      {
+        "time": "09:15:00",
+        "user": "Admin_Alice",
+        "asset": "Finance_DB",
+        "action": "GRANTED_PRIVILEGE",
+        "bytes": 0,
+        "meta": {
+          "granted_to": "Contractor_Bob"
+        },
+        "invalid_qpc": true
+      },
+      {
+        "time": "10:00:00",
+        "user": "Contractor_Bob",
+        "asset": "Finance_DB",
+        "action": "EXPORTED_FILE",
+        "bytes": 500000,
+        "meta": {}
+      },
+      {
+        "time": "10:30:00",
+        "user": "Contractor_Bob",
+        "asset": "Finance_DB",
+        "action": "EXPORTED_FILE",
+        "bytes": 500000,
+        "meta": {}
+      }
+    ]
+  ]
+}

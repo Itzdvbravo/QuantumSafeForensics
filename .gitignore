@@ -1,0 +1,65 @@
+# Environments
+.env
+.venv/
+venv/
+ENV/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+dist-ssr/
+*.local
+coverage/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project specific generated files
+Backend/alerts_dump.txt
+Backend/alerts_report.json
+Backend/investigation_report.txt
+Backend/synthetic_banking_logs.json
+Backend/logger_public_key.hex
+
+Data\ Generator/synthetic_banking_logs.json
+Data\ Generator/logger_public_key.hex
+Data\ Generator/evidence_evaluator_graph.html

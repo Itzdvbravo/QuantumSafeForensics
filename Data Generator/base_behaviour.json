@@ -1,0 +1,76 @@
+{
+  "Admin_Alice": {
+    "role": "Admin",
+    "start_hour": 8,
+    "end_hour": 18,
+    "normal_bytes": 5000,
+    "assets": [
+      "Jira",
+      "Admin_Gateway",
+      "Finance_DB",
+      "Employee_DB",
+      "Jump_Server_01",
+      "System_Core",
+      "HR_Portal",
+      "Customer_CRM"
+    ],
+    "daily_limit_bytes": 25000
+  },
+  "Contractor_Bob": {
+    "role": "Contractor",
+    "start_hour": 9,
+    "end_hour": 17,
+    "normal_bytes": 5000000,
+    "assets": [
+      "Jump_Server_01",
+      "System_Core"
+    ],
+    "daily_limit_bytes": 25000000
+  },
+  "User_Charlie": {
+    "role": "Employee",
+    "start_hour": 7,
+    "end_hour": 15,
+    "normal_bytes": 100000,
+    "assets": [
+      "HR_Portal",
+      "System_Core",
+      "Customer_CRM"
+    ],
+    "daily_limit_bytes": 500000
+  },
+  "HR_Steve": {
+    "role": "HR",
+    "start_hour": 9,
+    "end_hour": 17,
+    "normal_bytes": 150000,
+    "assets": [
+      "HR_Portal",
+      "Employee_DB"
+    ],
+    "daily_limit_bytes": 750000
+  },
+  "Finance_John": {
+    "role": "Finance",
+    "start_hour": 9,
+    "end_hour": 17,
+    "normal_bytes": 250000,
+    "assets": [
+      "Finance_DB",
+      "Jira"
+    ],
+    "daily_limit_bytes": 1250000
+  },
+  "User_Kattie": {
+    "role": "Employee",
+    "start_hour": 9,
+    "end_hour": 17,
+    "normal_bytes": 100000,
+    "assets": [
+      "HR_Portal",
+      "System_Core",
+      "Customer_CRM"
+    ],
+    "daily_limit_bytes": 500000
+  }
+}
