@@ -38,7 +38,7 @@ function getEntityRelationship(entity, alertedUser) {
   }
   const interactions = entity.interactions || [];
   if (interactions.length === 0) return "Correlated Entity";
-  
+
   const intx = interactions[0];
   if (intx.source === "BACKWARD_CHAIN") {
     if (intx.performed_by) return `Backward Chain: accessed by ${intx.performed_by}`;
