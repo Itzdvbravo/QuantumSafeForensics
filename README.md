@@ -33,6 +33,7 @@ pip install flask flask_cors dilithium-py
 # Set the Groq API key for AI-assisted risk enrichment
 # On Windows: set GROQ_API_KEY="gsk_..."
 # On Mac/Linux: export GROQ_API_KEY="gsk_..."
+# OR add GROQ_API_KEY="gsk_..." in .env file
 
 # Run the server
 python server.py

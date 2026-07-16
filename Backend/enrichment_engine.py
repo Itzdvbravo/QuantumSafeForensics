@@ -435,17 +435,30 @@ def enrich_alert(alert_id: str, alert_dict: dict) -> dict:
 
     if ai_resp:
         ai_nudge = int(ai_resp.get("riskNudge", 0))
+        
         event_summary    = ai_resp.get("eventSummary", f"Suspicious activity by {alert_dict.get('alertedUser', 'unknown user')}")
+        print("Ai_summary", event_summary, ai_resp)
         triggering_query = ai_resp.get("triggeringQuery", "No additional context available.")
         malicious        = _parse_indicator_list(ai_resp.get("maliciousIndicators"))
         benign           = _parse_indicator_list(ai_resp.get("benignFactors"))
     else:
-        manual = ENRICHMENT.get(alert_id)
-        if manual:
-            event_summary    = manual["event_summary"]
-            triggering_query = manual["triggering_query"]
-            malicious        = list(manual["malicious_indicators"])
-            benign           = list(manual["benign_factors"])
+        prev_data = {}
+        try:
+            report_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "alerts_report.json")
+            if os.path.exists(report_path):
+                with open(report_path, "r", encoding="utf-8") as f:
+                    for pa in json.load(f):
+                        if pa.get("alertId") == alert_id:
+                            prev_data = pa
+                            break
+        except Exception:
+            pass
+
+        if "eventSummary" in prev_data:
+            event_summary    = prev_data["eventSummary"]
+            triggering_query = prev_data.get("triggeringQuery", "No additional context available.")
+            malicious        = prev_data.get("maliciousIndicators", [])
+            benign           = prev_data.get("benignFactors", [])
         else:
             final_risk = compute_risk_pct(base_score, 0)
             alert_dict["riskPercentage"]      = final_risk
