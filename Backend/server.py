@@ -230,11 +230,23 @@ def get_alert_graph(alert_id: str):
     # -----------------------------------------------------------------------
     # edge_key -> {count, bytes, first_timestamp, isHighRisk, ...}
     edge_map: dict[tuple, dict] = {}
+    seen_events: set[tuple] = set()
 
     def _add_edge(source: str, target: str, action: str,
                   chain_type: str, bytes_tx: int,
                   timestamp: str, has_risk: bool) -> None:
-        key = (source, action, target, chain_type)
+        event_sig = (source, target, action, timestamp)
+        
+        # Deduplicate the exact same event that appears in multiple sections (e.g. TRIGGERING + HISTORIC)
+        if event_sig in seen_events:
+            key = (source, action, target)
+            if has_risk and key in edge_map:
+                edge_map[key]["isHighRisk"] = True
+            return
+            
+        seen_events.add(event_sig)
+
+        key = (source, action, target)
         if key in edge_map:
             edge_map[key]["count"] += 1
             edge_map[key]["bytes"] += bytes_tx
@@ -340,7 +352,7 @@ def get_alert_graph(alert_id: str):
 
     # Assign stable edge IDs
     edges = []
-    for idx, ((src, act, tgt, chain), meta) in enumerate(edge_map.items()):
+    for idx, ((src, act, tgt), meta) in enumerate(edge_map.items()):
         edges.append({"id": f"e{idx}", **meta})
 
     return jsonify({

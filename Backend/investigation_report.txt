@@ -2,7 +2,7 @@
 ======================================================================
         QUANTUM-SAFE FORENSICS — INSIDER THREAT INVESTIGATION
 ======================================================================
-  Run at  : 2026-07-15T14:22:40Z UTC
+  Run at  : 2026-07-17T07:46:53Z UTC
   Logs    : F:\SpecializedProjects\QuantumForensics - Finspark\Backend\synthetic_banking_logs.json
   Profiles: F:\SpecializedProjects\QuantumForensics - Finspark\Backend\base_behaviour.json
   Window  : 12h  |  Threshold: 100 pts
